@@ -1,6 +1,11 @@
 # Hassler Replication Package
 
-Replication code for examining the association between network "hasslers" and biological aging.
+Replication code for the following paper: 
+
+Lee, Byungkyu, Gabriele Ciciurkaite, Siyun Peng, Colter Mitchell, and Brea L. Perry. 2025. “Negative Social Ties as Emerging Risk Factors for Accelerated Aging, Inflammation, and Multimorbidity.” 2025.05.23.25328261.
+
+openaccess URL: https://www.medrxiv.org/content/10.1101/2025.05.23.25328261v3
+
 
 ## Data Access
 
