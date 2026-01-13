@@ -1,0 +1,44 @@
+# Master Snakemake pipeline to run data cleaning and analysis end-to-end.
+
+from pathlib import Path
+
+
+# Final cleaned dataset produced by 1_data-cleaning/run_data_cleaning.smk
+CLEANED_DATA = "/Users/bk/Indiana University/IU-IRSY-P2P - BK/data/processed/p2p_epigen_regression.dta"
+
+
+rule all:
+    input:
+        "2_analysis/logs/hassler_pipeline.done"
+
+
+rule run_data_cleaning:
+    """
+    Execute the data-cleaning workflow to generate the regression-ready dataset.
+    """
+    output:
+        cleaned=CLEANED_DATA
+    threads: 1
+    shell:
+        r'''
+        cd 1_data-cleaning
+        snakemake -s run_data_cleaning.smk --cores {threads} "{output.cleaned}"
+        '''
+
+
+rule run_analysis:
+    """
+    Run the Hassler analysis workflow after cleaning is complete.
+    """
+    input:
+        cleaned=CLEANED_DATA
+    output:
+        sentinel="2_analysis/logs/hassler_pipeline.done"
+    threads: 1
+    shell:
+        r'''
+        cd 2_analysis
+        snakemake -s run_hassler.smk --cores {threads}
+        mkdir -p logs
+        touch logs/hassler_pipeline.done
+        '''

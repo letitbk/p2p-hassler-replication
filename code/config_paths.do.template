@@ -1,0 +1,38 @@
+*==============================================================================
+* Path Configuration Template for Stata Scripts
+*==============================================================================
+*
+* INSTRUCTIONS FOR EXTERNAL RESEARCHERS:
+* 1. Copy this file to: config_paths.do
+* 2. Edit the global paths below to match your local environment
+* 3. DO NOT commit config_paths.do to git (it's in .gitignore)
+*
+* NOTE: Use absolute paths since data will be stored separately from code
+*==============================================================================
+
+* Project root directory (where output files will be written)
+global PROJECT_ROOT "/Users/username/path/to/project"
+
+* Raw data directories (restricted access - contact PI for data access)
+global RAW_DATA_DIR "/path/to/secure/data/Stata Files"
+global RAW_EHR_DIR "/path/to/ehr/data"
+global RAW_COVID_DIR "/path/to/covid/data"
+
+* Processed data directory (intermediate cleaned datasets)
+global PROCESSED_DATA_DIR "${PROJECT_ROOT}/data/processed"
+
+* Output directory (tables, figures, results)
+global OUTPUT_DIR "${PROJECT_ROOT}/output"
+
+*==============================================================================
+* Data Access Information
+*==============================================================================
+*
+* The P2P Health Interview Study data is restricted access.
+*
+* To request access:
+* - Homepage: https://irsay.iu.edu/tools-resources/data-resources/p2p-health-interview-study/
+* - Contact: Brea Perry (blperry@iu.edu)
+* - Public release expected: Summer 2026
+*
+*==============================================================================

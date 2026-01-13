@@ -1,0 +1,62 @@
+# =============================================================================
+# Path Configuration Template for R Scripts
+# =============================================================================
+#
+# INSTRUCTIONS FOR EXTERNAL RESEARCHERS:
+# 1. Copy this file to: config_paths.R
+# 2. Edit the paths below to match your local environment
+# 3. DO NOT commit config_paths.R to git (it's in .gitignore)
+#
+# NOTE: Use absolute paths since data will be stored separately from code
+# =============================================================================
+
+# Project root directory (where output files will be written)
+PROJECT_ROOT <- "/Users/username/path/to/project"
+
+# Raw data directories (restricted access - contact PI for data access)
+RAW_DATA_DIR <- "/path/to/secure/data/Stata Files"
+RAW_EHR_DIR <- "/path/to/ehr/data"
+RAW_COVID_DIR <- "/path/to/covid/data"
+
+# Processed data directory (intermediate cleaned datasets)
+PROCESSED_DATA_DIR <- file.path(PROJECT_ROOT, "data", "processed")
+
+# Output directory (tables, figures, results)
+OUTPUT_DIR <- file.path(PROJECT_ROOT, "output")
+
+# =============================================================================
+# Helper Functions - DO NOT MODIFY
+# =============================================================================
+
+get_raw_path <- function(filename) {
+  file.path(RAW_DATA_DIR, filename)
+}
+
+get_processed_path <- function(filename) {
+  file.path(PROCESSED_DATA_DIR, filename)
+}
+
+get_output_path <- function(filename) {
+  file.path(OUTPUT_DIR, filename)
+}
+
+get_ehr_path <- function(filename) {
+  file.path(RAW_EHR_DIR, filename)
+}
+
+get_covid_path <- function(filename) {
+  file.path(RAW_COVID_DIR, filename)
+}
+
+# =============================================================================
+# Data Access Information
+# =============================================================================
+#
+# The P2P Health Interview Study data is restricted access.
+#
+# To request access:
+# - Homepage: https://irsay.iu.edu/tools-resources/data-resources/p2p-health-interview-study/
+# - Contact: Brea Perry (blperry@iu.edu)
+# - Public release expected: Summer 2026
+#
+# =============================================================================
