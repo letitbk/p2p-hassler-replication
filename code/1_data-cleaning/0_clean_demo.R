@@ -20,7 +20,7 @@
 
 if (!exists("snakemake")) {
     # Standalone mode - load configuration file
-    config_path <- file.path(dirname(sys.frame(1)$ofile), "..", "config_paths.R")
+    config_path <- paste0("../", "config_paths.R")
     if (!file.exists(config_path)) {
         stop("Configuration file not found. Please copy config_paths.R.template to config_paths.R and edit paths.")
     }
@@ -92,13 +92,20 @@ for (var in race_var) {
 	dt_demo[get(var) %in% c(92, 97), (var) := NA]
 }
 
+# readjust race variables
 dt_demo[, race_single := NULL]
-dt_demo[race_white == 1, race_single := 'White']
-dt_demo[race_black_afam == 1, race_single := 'Black']
-dt_demo[race_amind == 1, race_single := 'AIAN']
-dt_demo[race_asian == 1, race_single := 'Asian']
-dt_demo[race_nathaw_pacis == 1, race_single := 'Other']
-dt_demo[race_other == 1, race_single := 'Other']
+
+dt_demo[, race_multiple := rowSums(.SD, na.rm = TRUE), .SDcols = c('race_white', 'race_black_afam', 'race_amind', 'race_asian', 'race_nathaw_pacis', 'race_other')]
+dt_demo[race_multiple == 0, race_multiple := NA]
+dt_demo[, race_multiple := ifelse(race_multiple > 1, 1, 0)]
+
+dt_demo[race_multiple == 0 & race_white == 1, race_single := 'White']
+dt_demo[race_multiple == 0 & race_black_afam == 1, race_single := 'Black']
+dt_demo[race_multiple == 0 & race_amind == 1, race_single := 'AIAN']
+dt_demo[race_multiple == 0 & race_asian == 1, race_single := 'Asian']
+dt_demo[race_multiple == 0 & race_nathaw_pacis == 1, race_single := 'Other']
+dt_demo[race_multiple == 0 & race_other == 1, race_single := 'Other']
+dt_demo[race_multiple == 1, race_single := 'Other']
 dt_demo[ethnicity == 1, race_single := 'Hispanic']
 
 dt_demo[, race_single := factor(race_single,

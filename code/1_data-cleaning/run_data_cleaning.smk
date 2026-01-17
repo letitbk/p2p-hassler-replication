@@ -120,7 +120,7 @@ rule clean_belief:
 
 rule clean_weight:
     input:
-        weight = join(dir_data_weight, 'panel_weights.dta'),
+        weight = join(dir_data_weight, 'P2P_panel_weights.dta'),
         df_clock = df_clock,
         df_demo = df_demo
     output: df_weight = df_weight

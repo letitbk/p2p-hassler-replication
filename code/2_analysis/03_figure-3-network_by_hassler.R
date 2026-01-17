@@ -29,7 +29,7 @@ if (exists("snakemake")) {
     output_file <- args[[3]]
   } else {
     # Load configuration file
-    config_path <- file.path(dirname(sys.frame(1)$ofile), "..", "config_paths.R")
+    config_path <- paste0("../", "config_paths.R")
     if (!file.exists(config_path)) {
       stop("Configuration file not found. Please copy config_paths.R.template to config_paths.R and edit paths.")
     }
@@ -48,7 +48,7 @@ setDT(dt_alters)
 
 dt_main <- readRDS(main_data_path)
 setDT(dt_main)
-ego_weights <- dt_main[, .(su_id, wt_final2)]
+ego_weights <- dt_main[, .(su_id, wt_comb)]
 
 # Prepare metrics for analysis ------------------------------------------------
 # Note: 'strength' column was skipped in data cleaning, so use available metrics
@@ -59,10 +59,10 @@ metrics <- dt_alters[, .(
 )]
 
 metrics <- merge(metrics, ego_weights, by = c("su_id"), all.x = TRUE)
-metrics <- metrics[!is.na(hassler_type) & !is.na(wt_final2)]
+metrics <- metrics[!is.na(hassler_type) & !is.na(wt_comb)]
 
 # Survey-weighted estimates ---------------------------------------------------
-svy_design <- svydesign(id = ~su_id, weights = ~wt_final2, data = metrics)
+svy_design <- svydesign(id = ~su_id, weights = ~wt_comb, data = metrics)
 
 # Use available metrics (strength not available)
 outcomes <- c("strength", "degree_weighted", "multiplex")

@@ -34,7 +34,7 @@ di as text "Data path: `data_path'"
 
 use "`data_path'", clear
 
-svyset fips [pweight = wt_final2]
+svyset psu [pweight = wt_comb], strata(strata)
 
 * Define age groups aligned with Figure 1 cutpoints, capping age at 85
 cap drop age_cap85 age_group

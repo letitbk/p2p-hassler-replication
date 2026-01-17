@@ -116,7 +116,7 @@ local bin  health_insurance covid matter_depend_binary matter_important_binary
 local predictors `cont' `bin' b3.educ3 i.race3 i.gender_birth i.marital3 i.occ_group i.smoke_status
 
 * Survey design
-svyset fips [pweight = wt_final2]
+svyset psu [pweight = wt_comb], strata(strata)
 
 * ---------------------------------------------------------------------------
 * Multivariate ZIP model

@@ -1,11 +1,6 @@
 # Hassler Replication Package
 
-Replication code for the following paper: 
-
-Lee, Byungkyu, Gabriele Ciciurkaite, Siyun Peng, Colter Mitchell, and Brea L. Perry. 2025. “Negative Social Ties as Emerging Risk Factors for Accelerated Aging, Inflammation, and Multimorbidity.” 2025.05.23.25328261.
-
-openaccess URL: https://www.medrxiv.org/content/10.1101/2025.05.23.25328261v3
-
+Replication code for examining the association between network "hasslers" and biological aging.
 
 ## Data Access
 
@@ -46,6 +41,10 @@ ssc install konfound
    cp code/config_paths.do.template code/config_paths.do
    ```
 3. Edit config files with your data paths
+4. **Configure Snakemake paths**: Edit the path variables at the top of:
+   - `code/Snakefile` - Set `CLEANED_DATA` to your processed data location
+   - `code/1_data-cleaning/run_data_cleaning.smk` - Set `dir_data_raw`, `dir_project`, `dir_data_clock`, etc.
+   - `code/2_analysis/run_hassler.smk` - Set `STATA`, `dir_data_raw`, `dir_project`, etc.
 
 ## Usage
 

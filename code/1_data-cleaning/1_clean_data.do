@@ -34,7 +34,7 @@ di as text "Output path: `output_path'"
 
 use "`data_path'/p2p_epigen_0501.dta", clear
 
-svyset fips [pweight = wt_final2]
+svyset psu [pweight = wt_comb], strata(strata)
 
 capture drop age_group
 recode age ///
@@ -197,7 +197,7 @@ gen female = (gender_birth == 2) if ~missing(gender_birth)
 
 * keep only variables used across analysis scripts
 keep ///
-    su_id fips wt_final2 ///
+    su_id psu strata wt_comb ///
     age gender_birth gender_birth_* race3 race3_* educ3 educ3_* marital3 marital3_* ///
     smoke_status smoke_status_* batch_int batch_int_* leukocytes_ic female ///
     n_size_all n_size_hassler has_hassler n_size_hassler_cat p_hassler p_hassler_cat mean_hassler_freq ///

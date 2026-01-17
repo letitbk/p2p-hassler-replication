@@ -43,7 +43,7 @@ if _rc {
     recode n_size_hassler_1 (1/max = 1)
 }
 
-svyset fips [pweight = wt_final2]
+svyset psu [pweight = wt_comb], strata(strata)
 
 local control_var i.batch_int leukocytes_ic age i.race3 i.gender_birth i.educ3 i.marital3 i.n_size_all
 

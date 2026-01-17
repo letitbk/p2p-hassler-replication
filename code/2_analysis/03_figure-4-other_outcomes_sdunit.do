@@ -38,7 +38,7 @@ foreach var in general_health mental_health physical_health anx_severity dep_sev
     egen `var'_sd = std(`var')
 }
 
-svyset fips [pweight = wt_final2]
+svyset psu [pweight = wt_comb], strata(strata)
 
 local control_var i.batch_int leukocytes_ic age i.race3 i.gender_birth i.educ3 i.marital3 i.n_size_all
 

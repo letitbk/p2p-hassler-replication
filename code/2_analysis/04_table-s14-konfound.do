@@ -34,7 +34,7 @@ di as text "Data path: `data_path'"
 
 use "`data_path'", clear
 
-svyset fips [pweight = wt_final2]
+svyset psu [pweight = wt_comb], strata(strata)
 
 capture confirm variable race3_1
 if _rc {

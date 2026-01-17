@@ -15,7 +15,7 @@
 
 if (!exists("snakemake")) {
     # Standalone mode - load configuration file
-    config_path <- file.path(dirname(sys.frame(1)$ofile), "..", "config_paths.R")
+    config_path <- paste0("../", "config_paths.R")
     if (!file.exists(config_path)) {
         stop("Configuration file not found. Please copy config_paths.R.template to config_paths.R and edit paths.")
     }

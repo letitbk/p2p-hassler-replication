@@ -6,8 +6,9 @@
 #' ==============
 # Variables created:
 #   - su_id: Subject ID
-#   - wt_final2: Final survey weight (adjusted for epigenome subsample)
-#   - fips: FIPS code (for survey design clustering)
+#   - wt_comb: Combined survey weight for pooled Main+Opioid sample analysis
+#   - strata: Stratification variable (2 strata)
+#   - psu: Primary sampling unit for cluster sampling (63 clusters)
 #' ==============
 
 #' =============================================================================
@@ -16,7 +17,7 @@
 
 if (!exists("snakemake")) {
     # Standalone mode - load configuration file
-    config_path <- file.path(dirname(sys.frame(1)$ofile), "..", "config_paths.R")
+    config_path <- paste0("../", "config_paths.R")
     if (!file.exists(config_path)) {
         stop("Configuration file not found. Please copy config_paths.R.template to config_paths.R and edit paths.")
     }
@@ -33,7 +34,7 @@ if (!exists("snakemake")) {
     snakemake = new(
         "snakemake",
         input = list(
-            weight = get_rawdata_subdir_path('weight', 'panel_weights.dta'),
+            weight = get_rawdata_subdir_path('weight', 'P2P_panel_weights.dta'),
             df_clock = get_processed_path('p2p_clock.rds'),
             df_demo = get_processed_path('p2p_demo_cleaned.rds')
         ),
@@ -59,7 +60,7 @@ log_info('Load weight data ...')
 dt_weight = import(snakemake@input$weight)
 setDT(dt_weight)
 
-dt_wt = dt_weight[, c('su_id','wt_final','wt_final2','fips')]
+dt_wt = dt_weight[, c('su_id', 'wt_comb', 'strata', 'psu')]
 
 log_info('# add weight adjustment for the sample selection')
 
@@ -83,7 +84,7 @@ log_info('# create weights')
 
 xx = c('race_single','gender_birth','age','age_group', 'education')
 yy = 'in_epigen'
-weight = 'wt_final2'
+weight = 'wt_comb'
 
 adata = dt_merged[,
 	c('su_id', xx,yy,weight),with=FALSE]
@@ -115,7 +116,7 @@ adata$participation_pred = c(predict(fit,
 	type = 'response',
 	newdata = adata))
 
-adata[, wt_final2_part := wt_final2 * 1 / participation_pred]
+adata[, wt_comb_part := wt_comb * 1 / participation_pred]
 
 #dt_wt = merge(dt_wt, adata[, c('su_id', 'wt_final2_part')], by ='su_id', all = TRUE)
 

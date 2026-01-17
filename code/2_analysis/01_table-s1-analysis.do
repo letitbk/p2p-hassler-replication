@@ -40,7 +40,7 @@ di as text "OK file: `ok_path'"
 
 use "`data_path'", clear
 
-svyset fips [pweight = wt_final2]
+svyset psu [pweight = wt_comb], strata(strata)
 
 tab occ_group, gen(occ_group_)
 gen i_sp_hassler = sp_n_size_hassler > 0 if ~missing(sp_n_size_hassler)
@@ -58,7 +58,7 @@ local summary_vars ///
     ageaccelgrim2 pace general_health mental_health physical_health ///
     inflammation cci_charlson_past3years any_encounter_3years ///
     multi_morbidity anx_severity dep_severity waist_to_hip_ratio bmi obese height
-eststo: estpost summarize `summary_vars' [aw = wt_final2] if analytic_sample == 1
+eststo: estpost summarize `summary_vars' [aw = wt_comb] if analytic_sample == 1
 
 esttab using "`table_path'", csv ///
     cells("count mean sd min max") ///
