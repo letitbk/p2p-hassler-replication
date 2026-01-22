@@ -18,6 +18,9 @@ RAW_DATA_DIR <- "/path/to/secure/data/Stata Files"
 RAW_EHR_DIR <- "/path/to/ehr/data"
 RAW_COVID_DIR <- "/path/to/covid/data"
 
+# Additional raw data subdirectories
+RAW_DATA_SUBDIR <- file.path(PROJECT_ROOT, "data", "rawdata")
+
 # Processed data directory (intermediate cleaned datasets)
 PROCESSED_DATA_DIR <- file.path(PROJECT_ROOT, "data", "processed")
 
@@ -46,6 +49,10 @@ get_ehr_path <- function(filename) {
 
 get_covid_path <- function(filename) {
   file.path(RAW_COVID_DIR, filename)
+}
+
+get_rawdata_subdir_path <- function(...) {
+  file.path(RAW_DATA_SUBDIR, ...)
 }
 
 # =============================================================================
