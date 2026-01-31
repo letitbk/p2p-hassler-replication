@@ -1,4 +1,4 @@
-# Hassler Replication Package
+# Replication Code for Hassler and Biological Aging Analysis
 
 Replication code for examining the association between network "hasslers" and biological aging.
 
